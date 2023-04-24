@@ -17,12 +17,7 @@ pip install -i https://pypi.tuna.tsinghua.edu.cn/simple flask
 cd big_screen;
 python app.py;
 ```
-
-* 大数据可视化展板通用模板 http://127.0.0.1:5000/        
-
-* 4600 万企业数据大屏可视化 http://127.0.0.1:5000/corp    
-
-* (2020-09) 厦门 10 万招聘数据大屏可视化 http://127.0.0.1:5000/job    
+ 
 
 # 示例
 
