@@ -1,12 +1,13 @@
 import pandas as pd
 import plotly.graph_objects as go
+from pyecharts.charts import Page
 
 # import plotly.express as px
 # import plotly.offline as py
 
 
-cd_metro = pd.read_excel(r"D:\SRTP\网站和代码\房价汇总带经纬度.xls")
-# print(type(cd_metro))
+cd_metro = pd.read_excel(r"房价汇总带经纬度.xls")
+print(cd_metro)
 token = 'pk.eyJ1IjoiZm94eGpqIiwiYSI6ImNraDJ1OXNhbzBhYzEydXA2Ymt6N2R0NHAifQ.VkK9tHG3fwSnVr2k2Zxleg'
 
 order_route = cd_metro['线路']
@@ -22,8 +23,8 @@ print("min_route = ", min_route)
 # print(len_route)
 
 zipped_lines = list(set(zip(order_route, len_route)))  # 使用set去重得到线路条数
-# print(zipped_lines)
 # print(type(zipped_lines))
+# print(zipped_lines)
 
 
 lines = cd_metro['线路'].unique()
@@ -61,23 +62,88 @@ for i, val in enumerate(zipped_lines):
 print(zipped_lines)
 
 
-fig = go.Figure([go.Scattermapbox(mode='markers + lines',
-                                  # 取对应每一条线路的经纬度信息
-                                  lon=cd_metro.loc[lambda x: x['线路'] == line[0]]['经度'],
-                                  lat=cd_metro.loc[lambda x: x['线路'] == line[0]]['纬度'],
-                                  marker={'color': colors[line[2]],
-                                          'size': 5},
-                                  hovertext=cd_metro.loc[lambda x: x['线路'] == line[0]]['站名'],
-                                  showlegend=True,
-                                  name=('线路' + str(line[0]) + '|无约:' + str(line[1]))
-                                  ) for line in zipped_lines])
+def mapfig():
+    fig = go.Figure([go.Scattermapbox(mode='markers + lines',
+                                      # 取对应每一条线路的经纬度信息
+                                      lon=cd_metro.loc[lambda x: x['线路'] == line[0]]['经度'],
+                                      lat=cd_metro.loc[lambda x: x['线路'] == line[0]]['纬度'],
+                                      marker={'color': colors[line[2]],
+                                              'size': 5},
+                                      hovertext=cd_metro.loc[lambda x: x['线路'] == line[0]]['站名'],
+                                      showlegend=True,
+                                      name=('线路' + str(line[0]) + '|无约:' + str(line[1]))
+                                      ) for line in zipped_lines])
+
+    fig.update_layout(mapbox={'accesstoken': token,
+                              'center': {'lon': 116.4247,
+                                         'lat': 39.9056},
+                              'zoom': 11.8},
+                      margin={'l': 0, 'r': 0, 't': 0, 'b': 0}
+                      )
+    return fig
 
 
-fig.update_layout(mapbox={'accesstoken': token,
-                          'center': {'lon': 116.4247,
-                                     'lat': 39.9056},
-                          'zoom': 11.8},
-                  margin={'l': 0, 'r': 0, 't': 0, 'b': 0}
-                  )
+def linefig():
+    trace_high = go.Scatter(
+        x=order_route,
+        y=len_route,
+        name="各线路无约时间",
+        line=dict(color='#17BECF'),
+        opacity=0.8)
 
-fig.write_html(r'D:\SRTP\网站和代码\cd_metro_38有约.html')
+    # trace_low = go.Scatter(
+    #     x=cd_metro.date,
+    #     y=cd_metro['low'],
+    #     name="TSLA Low",
+    #     line=dict(color='#7F7F7F'),
+    #     opacity=0.8)
+
+    # data = [trace_high, trace_low]
+    data = [trace_high]
+
+    layout = dict(
+        title='北京市公交线路无约时间折线图',
+        xaxis=dict(
+            # rangeselector=dict(
+            #     buttons=list([
+            #         dict(count=1,
+            #              label='1m',
+            #              step='month',
+            #              stepmode='backward'),
+            #         dict(count=6,
+            #              label='6m',
+            #              step='month',
+            #              stepmode='backward'),
+            #         dict(step='all')
+            #     ])
+            # ),
+            rangeslider=dict(
+                visible=True
+            ),
+            type='date'
+        )
+    )
+    fig1 = dict(data=data, layout=layout)
+    # iplot(fig1, filename="北京市公交线路无约时间折线图")
+    # plotly.offline.plot(fig, filename='Plotly_Stock.html')
+    return fig1
+
+
+def page_simple_layout():
+    page = Page(layout=Page.DraggablePageLayout, page_title="基于Pyecharts的销售数据大屏")
+    page.add(
+        # mapfig(),
+        linefig(),
+        # pie_chart(),
+        # pie_chart_2(),
+        # bar_chart(),
+    )
+    # page.render('test_2.html')
+    return page
+
+
+if __name__ == "__main__":
+    page_simple_layout()
+
+
+# fig.write_html(r'cd_metro_111.html')
