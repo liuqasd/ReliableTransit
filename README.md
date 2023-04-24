@@ -1,5 +1,11 @@
 # ReliableTransit
+
 ## Python实现公交线路可视化
+
+# 示例
+
+![微信图片编辑_20230424085232](https://user-images.githubusercontent.com/76517079/233877097-5475f2da-e1fc-4c94-ac92-cfef82128e46.jpg)
+
 ## Flask构建可视化大屏展示
 # big_screen
 数据大屏可视化
