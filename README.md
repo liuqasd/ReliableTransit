@@ -24,7 +24,7 @@ python app.py;
 
 # 示例
 
-![image](https://github.com/TurboWay/imgstore/blob/master/bigscreen/corp.jpg)
+![QQ图片20230424082859](https://user-images.githubusercontent.com/76517079/233875538-0bd55715-9b3a-4c79-a93e-ae7a4b30d05d.jpg)
 
 
 # 参考
