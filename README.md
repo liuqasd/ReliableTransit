@@ -1,6 +1,27 @@
-# ReliableTransit
+# ReliableTransit — 公交线路可视化
 
-## Python实现公交线路可视化
+🚌 基于 Python 的公交线路数据可视化工具，将公交运营数据映射为可交互的路线图。
+
+## 功能
+
+- 🗺️ **线路绘制** — 在地图上绘制公交线路轨迹
+- 📊 **数据聚合** — 处理公交站点与时刻表数据
+- 🎨 **可视化输出** — 生成 HTML 交互式地图
+
+## 技术栈
+
+- **Python** — 数据处理（pandas / geopandas）
+- **Folium / Leaflet** — 地图可视化
+- **HTML** — 输出展示
+
+## 快速开始
+
+```bash
+git clone https://github.com/liuqasd/ReliableTransit.git
+cd ReliableTransit
+pip install -r requirements.txt
+python main.py
+```
 
 # 示例
 
